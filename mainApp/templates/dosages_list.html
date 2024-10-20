@@ -1,0 +1,112 @@
+{% extends 'base.html' %} {% block content %} {% include 'profile.html' %}
+
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Medicine List</h1>
+
+    <ul class="bg-white shadow-md rounded-lg">
+        {% for dosage in dosages %}
+        <li
+            class="flex justify-between items-center border-b p-4 hover:bg-gray-50"
+        >
+            <div class="flex flex-col">
+                <span class="font-semibold"
+                    >Medicine Name: {{dosage.medicine_name}}</span
+                >
+                <span>Unit: {{dosage.units}}</span>
+                <span>Frequency: {{dosage.frequency}}</span>
+                <span>Quantity: {{dosage.quantity}}</span>
+            </div>
+            <div>
+                <button
+                    onclick="openModal()"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                    data-id="{{dosage.id}}"
+                >
+                    Edit
+                </button>
+                <a
+                    href="{% url 'mainApp:delete_dosage' dosage.id %}"
+                    class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 ml-2"
+                >
+                    Delete
+                </a>
+            </div>
+        </li>
+        <div id="modal" class="modal">
+            <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+                <h2 class="text-xl font-bold mb-4">Edit Medicine</h2>
+                <form
+                    method="post"
+                    action='{% url "mainApp:edit_dosage" dosage.id %}'
+                >
+                    {% csrf_token %}
+                    <label class="block mb-2">
+                        Medicine Name:
+                        <input
+                            name="editName"
+                            type="text"
+                            class="border rounded-md p-2 w-full"
+                            placeholder="Enter medicine name"
+                            value="{{dosage.medicine_name}}"
+                            required
+                        />
+                    </label>
+                    <label class="block mb-2">
+                        Unit:
+                        <input
+                            name="editUnit"
+                            type="text"
+                            class="border rounded-md p-2 w-full"
+                            placeholder="Enter unit"
+                            value="{{dosage.units}}"
+                            required
+                        />
+                    </label>
+                    <label class="block mb-2">
+                        Frequency:
+                        <input
+                            name="editFrequency"
+                            type="text"
+                            class="border rounded-md p-2 w-full"
+                            placeholder="Enter frequency"
+                            value="{{dosage.frequency}}"
+                            required
+                        />
+                    </label>
+                    <label class="block mb-2">
+                        Quantity:
+                        <input
+                            name="editQuantity"
+                            type="number"
+                            class="border rounded-md p-2 w-full"
+                            placeholder="Enter quantity"
+                            value="{{dosage.quantity}}"
+                            required
+                        />
+                    </label>
+                    <div class="mt-4 flex justify-end">
+                        <button
+                            type="button"
+                            onclick="closeModal()"
+                            class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+                        >
+                            Close
+                        </button>
+                        <button
+                            type="submit"
+                            class="bg-blue-500 text-white px-4 py-2 rounded-md"
+                        >
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Add more list items as needed -->
+    </ul>
+</div>
+<!-- Modal -->
+
+{% endblock content %}

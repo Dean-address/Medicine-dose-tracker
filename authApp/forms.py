@@ -7,6 +7,7 @@ class SignupForm(forms.Form):
     first_name = forms.CharField(label='FirstName', required=True)
     last_name = forms.CharField(label='LastName', required=True)
     email = forms.EmailField(label='Email',required=True)
+    profile_image = forms.ImageField(required=False)
     password = forms.CharField(max_length=32, required=True, widget=forms.PasswordInput)
 
 class LoginForm(forms.Form):

@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Hello World {{user.username}}</h1>
-<a href="{% url 'mainApp:logout_user' %}">Logout</a>
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+<h1></h1>
+{% include 'profile.html' %}
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold mb-6">Medicine Dose Tracker</h2>
+    {% crispy form %} {% csrf_token %}
+</div>
+
 {% endblock %}
